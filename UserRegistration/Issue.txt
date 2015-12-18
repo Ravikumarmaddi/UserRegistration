@@ -1,0 +1,178 @@
+I am getting duplicate Records. Need help please.
+
+I have two tables Customer, Address
+
+In Customer.java
+
+		@Entity
+		@Table(name = "customer", uniqueConstraints = { @UniqueConstraint(columnNames = { "customer_id" }) })
+		@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+		@NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
+		public class Customer implements Serializable {
+	
+		@Id
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		@Column(name = "customer_id")
+		private long customerId;
+		
+		@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+		@Column(nullable = true)
+		@JsonManagedReference
+		private List<Address> addresses;
+
+In Address.java
+
+		@Entity
+		@Table(name = "address", uniqueConstraints = { @UniqueConstraint(columnNames = { "account_id" }) })
+		@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+		public class Address implements Serializable {
+		private static final long serialVersionUID = 1L;
+	
+		@Id
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		@Column(name = "account_id")
+		private long accountId;
+		
+		@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+		@JoinColumn(name = "customer_id")
+		@JsonBackReference
+		private Customer customer;
+	
+And Tables are:
+Customer table:
+
+	CREATE TABLE `customer` (
+	  `customer_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+	  `user_name` varchar(45) NOT NULL,
+	  `password` varchar(45) NOT NULL,
+	  `encrypt_key` varchar(200) NOT NULL,
+	  `theme_id` smallint(5) unsigned NOT NULL,
+	  `first_name` varchar(45) NOT NULL,
+	  `last_name` varchar(45) NOT NULL,
+	  `email` varchar(50) DEFAULT NULL,
+	  `active` tinyint(1) NOT NULL DEFAULT '1',
+	  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  `self_description` varchar(2000) NOT NULL,
+	  PRIMARY KEY (`customer_id`),
+	  KEY `idx_last_name` (`last_name`)
+	) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+
+Address table: 
+
+	CREATE TABLE `address` (
+	  `account_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+	  `customer_id` smallint(5) unsigned NOT NULL,
+	  `address_type` varchar(15) NOT NULL,  -- Office, Branch-1, Branch-2, 
+	  `door_num` varchar(50) NOT NULL,
+	  `landmark` varchar(150) DEFAULT NULL,
+	  `street` varchar(50) DEFAULT NULL,
+	  `area_name` varchar(25) NOT NULL,
+	  `district` varchar(25) NOT NULL,
+	  `city` varchar(25) NOT NULL,
+	  `postal_code` varchar(10) DEFAULT NULL,
+	  `phone1` varchar(20) NOT NULL,
+	  `phone2` varchar(20),
+	  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  PRIMARY KEY (`account_id`),
+	  KEY `idx_fk_city` (`city`),
+	  CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON UPDATE CASCADE
+	) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
+
+Getting duplicate records:
+
+	{
+	  "customerId": 101,
+	  "active": 1,
+	  "email": "bbb@gmail.com",
+	  "encryptKey": "wwwwwfsad",
+	  "firstName": "aaa",
+	  "lastName": "bbb",
+	  "password": "user1",
+	  "selfDescription": "user1",
+	  "userName": "user1",
+	  "addresses": [
+	    {
+	      "accountId": 201,
+	      "addressType": "main office",
+	      "areaName": "area1",
+	      "city": "city1",
+	      "district": "district1",
+	      "doorNum": "89",
+	      "landmark": "landmark1",
+	      "phone1": "646432365465",
+	      "phone2": "4534542355675",
+	      "postalCode": "453245",
+	      "street": "street1"
+	    },
+	    {
+	      "accountId": 201,
+	      "addressType": "main office",
+	      "areaName": "area1",
+	      "city": "city1",
+	      "district": "district1",
+	      "doorNum": "89",
+	      "landmark": "landmark1",
+	      "phone1": "646432365465",
+	      "phone2": "4534542355675",
+	      "postalCode": "453245",
+	      "street": "street1"
+	    },
+	    {
+	      "accountId": 202,
+	      "addressType": "main office",
+	      "areaName": "area2",
+	      "city": "city2",
+	      "district": "district2",
+	      "doorNum": "89",
+	      "landmark": "landmark2",
+	      "phone1": "453454675",
+	      "phone2": "53425324",
+	      "postalCode": "7457646432",
+	      "street": "street2"
+	    },
+	    {
+	      "accountId": 202,
+	      "addressType": "main office",
+	      "areaName": "area2",
+	      "city": "city2",
+	      "district": "district2",
+	      "doorNum": "89",
+	      "landmark": "landmark2",
+	      "phone1": "453454675",
+	      "phone2": "53425324",
+	      "postalCode": "7457646432",
+	      "street": "street2"
+	    }
+	  ],
+	  "customerOptions": [
+	    {
+	      "id": {
+	        "questionId": 501,
+	        "customerId": 101,
+	        "optionId": 601
+	      }
+	    },
+	    {
+	      "id": {
+	        "questionId": 502,
+	        "customerId": 101,
+	        "optionId": 603
+	      }
+	    },
+	    {
+	      "id": {
+	        "questionId": 501,
+	        "customerId": 101,
+	        "optionId": 601
+	      }
+	    },
+	    {
+	      "id": {
+	        "questionId": 502,
+	        "customerId": 101,
+	        "optionId": 603
+	      }
+	    }
+	  ]
+	}
+	

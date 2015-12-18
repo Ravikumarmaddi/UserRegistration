@@ -1,0 +1,97 @@
+-- ID SEQUENCE STARTS FROM
+-- customer        101
+-- address         201
+-- theme_category  301
+-- theme           401
+-- question        501
+-- options         601
+
+CUSTOMER:
+GET:
+http://183.82.101.5:7080/CustomerRegistration/customer/101
+GET ALL:
+http://localhost:8080/CustomerRegistration/customer/list
+CREATE:
+http://183.82.101.5:7080/CustomerRegistration/customer/create
+Header Params: Content-Type: application/json
+{
+  "addresses": [
+    {
+      "addressType": "main office",
+      "areaName": "area1",
+      "city": "city1",
+      "district": "district1",
+      "doorNum": "89",
+      "landmark": "landmark1",
+      "phone1": "646432365465",
+      "phone2": "4534542355675",
+      "postalCode": "453245",
+      "street": "street1"
+    },
+    {
+      "addressType": "main office",
+      "areaName": "area2",
+      "city": "city2",
+      "district": "district2",
+      "doorNum": "89",
+      "landmark": "landmark2",
+      "phone1": "453454675",
+      "phone2": "53425324",
+      "postalCode": "7457646432",
+      "street": "street2"
+    }
+  ],
+  "active": 1,
+  "email": "bbb@gmail.com",
+  "encryptKey": "wwwwwfsad",
+  "firstName": "aaa",
+  "lastName": "bbb",
+  "password": "user1",
+  "selfDescription": "user1",
+  "userName": "user1",
+  "theme": {
+    "description": "theme2",
+    "name": "theme2",
+    "categoryId": 301
+  }
+}
+DELETE:
+http://183.82.101.5:7080/CustomerRegistration/customer/delete/103
+
+THEME:
+GET:
+http://183.82.101.5:7080/CustomerRegistration/theme/401
+GET ALL:
+http://localhost:8080/CustomerRegistration/theme/list
+CREATE:
+http://183.82.101.5:7080/CustomerRegistration/theme/create
+Header Params: Content-Type: application/json
+{"description":"theme8","name":"theme8","categoryId":302}
+DELETE:
+http://183.82.101.5:7080/CustomerRegistration/theme/delete/406
+
+QUESTIONS:
+GET:
+http://183.82.101.5:7080/CustomerRegistration/question/501
+GET ALL:
+http://localhost:8080/CustomerRegistration/question/list
+CREATE:
+http://183.82.101.5:7080/CustomerRegistration/question/create
+{
+    "question": "Question7",
+    "questionOptions": [
+        {
+            "optionDescription": "option1",
+            "optionKey": "a"
+        },
+        {
+            "optionDescription": "option2",
+            "optionKey": "b"
+        }
+          ]
+}
+DELETE:
+http://183.82.101.5:7080/CustomerRegistration/question/delete/503
+
+
+       
