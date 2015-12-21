@@ -3,7 +3,6 @@ package com.mobily.model;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,9 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * The persistent class for the theme_category database table.
@@ -46,7 +45,6 @@ public class ThemeCategory implements Serializable {
 	@OneToMany(mappedBy = "themeCategory", fetch = FetchType.EAGER)
 	@Column(nullable = true)
 	@JsonManagedReference
-	@JsonBackReference
 	private Set<Theme> themes;
 
 	// bi-directional many-to-one association to ThemeCategory
@@ -55,13 +53,13 @@ public class ThemeCategory implements Serializable {
 	@JsonBackReference
 	private ThemeCategory parentThemeCategory;
 
-/*	// bi-directional many-to-one association to ThemeCategory
+	// bi-directional many-to-one association to ThemeCategory
 	// @OneToMany(mappedBy="themeCategory")
 	@OneToMany(mappedBy = "parentThemeCategory", fetch = FetchType.EAGER)
 	@Column(nullable = true)
 	@JsonManagedReference
 	private Set<ThemeCategory> themeCategories;
-*/
+
 	public ThemeCategory() {
 	}
 
@@ -119,15 +117,15 @@ public class ThemeCategory implements Serializable {
 		this.parentThemeCategory = parentThemeCategory;
 	}
 
-/*	public Set<ThemeCategory> getThemeCategories() {
+	public Set<ThemeCategory> getThemeCategories() {
 		return this.themeCategories;
 	}
 
 	public void setThemeCategories(Set<ThemeCategory> themeCategories) {
 		this.themeCategories = themeCategories;
 	}
-*/
-/*	public ThemeCategory addThemeCategory(ThemeCategory themeCategory) {
+
+	public ThemeCategory addThemeCategory(ThemeCategory themeCategory) {
 		getThemeCategories().add(themeCategory);
 		themeCategory.setThemeCategory(this);
 
@@ -140,5 +138,5 @@ public class ThemeCategory implements Serializable {
 
 		return themeCategory;
 	}
-*/
+
 }

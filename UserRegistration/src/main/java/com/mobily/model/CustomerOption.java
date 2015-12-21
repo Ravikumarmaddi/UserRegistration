@@ -2,7 +2,6 @@ package com.mobily.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * The persistent class for the customer_options database table.
@@ -33,23 +31,23 @@ public class CustomerOption implements Serializable {
 	// @JoinColumn(name="customer_id")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_id",referencedColumnName="customer_id", insertable=false, updatable=false)
-	@JsonBackReference
+	//@JsonBackReference
 	private Customer customer;
 
-	// bi-directional many-to-one association to Question
+/*	// bi-directional many-to-one association to Question
 	// @ManyToOne
 	// @JoinColumn(name="question_id")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "question_id",referencedColumnName="question_id", insertable=false, updatable=false)
-	@JsonBackReference
+	//@JsonBackReference
 	private Question question;
-
+*/
 	// bi-directional many-to-one association to QuestionOption
 	// @ManyToOne
 	// @JoinColumn(name="option_id")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "option_id",referencedColumnName="option_id", insertable=false, updatable=false)
-	@JsonBackReference
+	//@JsonBackReference
 	private QuestionOption questionOption;
 
 	public CustomerOption() {
@@ -71,14 +69,14 @@ public class CustomerOption implements Serializable {
 		this.customer = customer;
 	}
 
-	public Question getQuestion() {
+/*	public Question getQuestion() {
 		return this.question;
 	}
 
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
-
+*/
 	public QuestionOption getQuestionOption() {
 		return this.questionOption;
 	}

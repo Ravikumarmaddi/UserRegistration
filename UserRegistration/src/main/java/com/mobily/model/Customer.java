@@ -17,9 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * The persistent class for the customer database table.
@@ -39,7 +39,7 @@ public class Customer implements Serializable {
 
 	// bi-directional many-to-one association to Address
 	// @OneToMany(mappedBy="customer")
-	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Column(nullable = true)
 	@JsonManagedReference
 	private Set<Address> addresses;
@@ -54,9 +54,9 @@ public class Customer implements Serializable {
 
 	// bi-directional many-to-one association to CustomerOption
 	// @OneToMany(mappedBy="customer")
-	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Column(nullable = true)
-	@JsonManagedReference
+	//@JsonManagedReference
 	private Set<CustomerOption> customerOptions;
 	private byte active;
 
@@ -176,13 +176,13 @@ public class Customer implements Serializable {
 		return address;
 	}
 
-	public Theme getTheme() {
+	/*public Theme getTheme() {
 		return this.theme;
 	}
 
 	public void setTheme(Theme theme) {
 		this.theme = theme;
-	}
+	}*/
 
 	public Set<CustomerOption> getCustomerOptions() {
 		return this.customerOptions;

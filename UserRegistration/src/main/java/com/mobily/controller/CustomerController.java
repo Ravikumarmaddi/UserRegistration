@@ -25,14 +25,16 @@ public class CustomerController {
 
 	static final Logger logger = Logger.getLogger(CustomerController.class);
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/create", method = RequestMethod.POST, 
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody
 	Status addCustomer(@RequestBody Customer customer) {
 		try {
 			customerServices.addEntity(customer);
 			return new Status(1, "Customer added Successfully !");
 		} catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			return new Status(0, e.toString());
 		}
 

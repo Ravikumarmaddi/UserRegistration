@@ -8,10 +8,17 @@
 	<name>CustomerRegistration</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<spring.version>4.0.5.RELEASE</spring.version>
+		<spring.version>4.2.3.RELEASE</spring.version>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<log4j.version>1.2.17</log4j.version>
 		<jdk.version>1.7</jdk.version>
+		<assertj.version>3.2.0</assertj.version>
+		<mockito.version>2.0.2-beta</mockito.version>
+		<rest-assured.version>2.7.0</rest-assured.version>
+		<junit.version>4.12</junit.version>
+		<spring-boot-starter.version>1.2.3.RELEASE</spring-boot-starter.version>
+		<jackson.version>2.6.4</jackson.version>
+		<tomcat-juli.version>8.0.30</tomcat-juli.version>
 		<context.path>customerregistration</context.path>
 	</properties>
 	<build>
@@ -23,6 +30,22 @@
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
 				</configuration>
+			</plugin>
+			<plugin>
+			  <artifactId>maven-failsafe-plugin</artifactId>
+			  <executions>
+			    <execution>
+			      <id>integration-test</id>
+			      <goals>
+			        <goal>integration-test</goal>
+			      </goals>
+			      <configuration>
+			        <includes>
+			          <include>test/*.class</include>
+			        </includes>
+			      </configuration>
+			    </execution>
+			  </executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -44,17 +67,17 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -73,14 +96,50 @@
 			<version>5.1.6</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.10</version>
-		</dependency>
-		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<!-- Spring Boot Dependency For Integration Tests -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring-boot-starter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<version>${spring-boot-starter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+			<version>${spring-boot-starter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+		  <version>${junit.version}</version>
+		  <scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-juli</artifactId>
+			<version>${tomcat-juli.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
